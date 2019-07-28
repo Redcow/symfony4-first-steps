@@ -4,8 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BlogController extends AbstractController
 {
@@ -27,9 +33,22 @@ class BlogController extends AbstractController
     /**
      * @Route("blog/new", name="blog_create")
      */
-    public function create()
+    public function create(Request $request)
     {
-        return $this->render('blog/create.html.twig');
+        $article = new Article();
+
+        $form = $this->createFormBuilder($article)
+            ->add('title')
+            ->add('content')
+            ->add('image')
+            /* ->add('save', SubmitType::class, [
+                'label' => 'Ajouter'
+                ]) */
+            ->getForm();
+
+        return $this->render('blog/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
