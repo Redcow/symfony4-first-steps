@@ -3,25 +3,22 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Article;
+use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
-
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BlogController extends AbstractController
 {
     /**
      * @Route("/blog", name="blog")
+     * @param ArticleRepository $repo
+     * @return Response
      */
     public function index(ArticleRepository $repo)
     {
-        //$repo = $this->getDoctrine()->getRepository(Article::class);
-        // Injection de dépendance
         $articles = $repo->findAll();
 
         return $this->render('blog/index.html.twig', [
@@ -32,19 +29,13 @@ class BlogController extends AbstractController
 
     /**
      * @Route("blog/new", name="blog_create")
+     * @param Request $request
+     * @return Response
      */
     public function create(Request $request)
     {
         $article = new Article();
-
-        $form = $this->createFormBuilder($article)
-            ->add('title')
-            ->add('content')
-            ->add('image')
-            /* ->add('save', SubmitType::class, [
-                'label' => 'Ajouter'
-                ]) */
-            ->getForm();
+        $form = $this->createForm(ArticleFormType::class, $article);
 
         return $this->render('blog/create.html.twig', [
             'form' => $form->createView()
@@ -53,12 +44,11 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/blog/{id}", name="blog_show", requirements={"id"="\d+"})
+     * @param Article $article
+     * @return Response
      */
-    //public function show(ArticleRepository $repo, int $id)
     public function show(Article $article)
     {
-        //$repo = $this->getDoctrine()->getRepository(Article::class);
-        //$article = $repo->find($id);
         return $this->render('blog/show.html.twig', [
             'article' => $article
         ]);
