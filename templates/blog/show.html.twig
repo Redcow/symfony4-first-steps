@@ -8,7 +8,7 @@
     <div class="content">
         <img alt="" src="{{ article.image }}">
         <p>{{article.content}}</p>
-        <a href="{{ path('blog_show', {'id': article.id}) }}">Lire la suite</a>
+        <a href="{{ path('blog_edit', {'id': article.id}) }}">Modifier</a>
     </div>
 </article>
 {% endblock %}

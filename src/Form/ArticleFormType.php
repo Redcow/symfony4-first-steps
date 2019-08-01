@@ -19,10 +19,10 @@ class ArticleFormType extends AbstractType
         ->add('image');
     }
 
-    /* public function configureOptions(OptionsResolver $resolver)
+    /*public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => Article::class,
         ]);
-    } */
+    }*/
 }

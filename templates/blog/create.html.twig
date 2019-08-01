@@ -3,7 +3,14 @@
 {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
 
 {% block body %}
-    <h1>Création d'un nouvel article</h1>
+
+    <h1>
+        {% if editMode %}
+            Modification de l'article
+        {% else %}
+            Création d'un nouvel article
+        {% endif %}
+    </h1>
 
     {{ form_start(form) }}
 
@@ -13,9 +20,13 @@
 
     {{ form_row(form.image, {"attr" : {'placeholder' : "URL de l'image"}}) }}
 
-    {# {{ form_widget(form) }} #}
-
-    <button class="btn btn-success">Ajouter l'article</button>
+    <button class="btn btn-success">
+        {% if editMode %}
+            Enregistrer
+        {% else %}
+            Ajouter l'article
+        {% endif %}
+    </button>
 
     {{ form_end(form) }}
 
