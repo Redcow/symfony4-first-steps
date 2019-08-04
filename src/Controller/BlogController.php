@@ -66,7 +66,7 @@ class BlogController extends AbstractController
 
         return $this->render('blog/create.html.twig', [
             'form' => $form->createView(),
-            'editMode' => !$article->getId()
+            'editMode' => $article->getId()
         ]);
     }
 

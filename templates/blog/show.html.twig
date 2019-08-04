@@ -5,10 +5,26 @@
     <h2>{{ article.title }}</h2>
     {% set date = article.createdAt %}
     <div class="metadata">Ecrit le {{ date | date('d/m/Y') }} à {{ date | date('h:m') }}</div>
+    <div>dans la catégorie {{ article.category.title }}</div>
     <div class="content">
         <img alt="" src="{{ article.image }}">
-        <p>{{article.content}}</p>
+        <div>{{article.content | raw}}</div>
         <a href="{{ path('blog_edit', {'id': article.id}) }}">Modifier</a>
     </div>
 </article>
+<hr>
+<section id="commentaires">
+    {% for comment in article.comments %}
+    <div class="commentaire">
+        <div class="row">
+            <div class="col-3">
+                {{ comment.author }} (<small>{{ comment.createdAt | date('d/m/Y à H:m') }}</small>
+            </div>
+            <div class="col">
+                {{ comment.content | raw }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
 {% endblock %}
